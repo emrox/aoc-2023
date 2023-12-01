@@ -7,7 +7,7 @@ pub fn part_one(input: &str) -> Option<u32> {
     for line in lines {
         let numbers: Vec<&str> = line.matches(char::is_numeric).collect();
 
-        if numbers.len() <= 0 {
+        if numbers.is_empty() {
                 continue;
         }
 
