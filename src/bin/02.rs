@@ -42,7 +42,38 @@ pub fn part_one(input: &str) -> Option<u32> {
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    None
+    let games: Vec<&str> = input.lines().collect();
+
+    let cube_matcher = Regex::new(r"([0-9]+ (red|green|blue))").unwrap();
+
+    let mut power: u32 = 0;
+
+    for game in games {
+        let game_split: Vec<&str> = game.split(":").map(str::trim).collect();
+        let cubes: Vec<&str> = cube_matcher.find_iter(game_split[1]).map(|m| { m.as_str() }).collect();
+
+        let mut max_red_cubes: u32 = 0;
+        let mut max_green_cubes: u32 = 0;
+        let mut max_blue_cubes: u32 = 0;
+
+        for cube in cubes {
+            let cube_split: Vec<&str> = cube.split(" ").collect();
+            let cube_count: u32 = cube_split[0].parse::<u32>().unwrap();
+            let cube_color: &str = cube_split[1];
+
+            if cube_color == "red" && cube_count > max_red_cubes {
+                max_red_cubes = cube_count;
+            } else if cube_color == "green" && cube_count > max_green_cubes {
+                max_green_cubes = cube_count;
+            } else if cube_color == "blue" && cube_count > max_blue_cubes {
+                max_blue_cubes = cube_count;
+            }
+        }
+
+        power += max_red_cubes * max_green_cubes * max_blue_cubes;
+    }
+
+    Some(power)
 }
 
 #[cfg(test)]
@@ -58,6 +89,6 @@ mod tests {
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        assert_eq!(result, Some(2286));
     }
 }
