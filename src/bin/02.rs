@@ -13,15 +13,15 @@ pub fn part_one(input: &str) -> Option<u32> {
     let cube_matcher = Regex::new(r"([0-9]+ (red|green|blue))").unwrap();
 
     for game in games {
-        let game_split: Vec<&str> = game.split(":").map(str::trim).collect();
-        let game_number: u32 = game_split[0].split(" ").collect::<Vec<&str>>()[1].parse::<u32>().unwrap();
+        let game_split: Vec<&str> = game.split(':').map(str::trim).collect();
+        let game_number: u32 = game_split[0].split(' ').collect::<Vec<&str>>()[1].parse::<u32>().unwrap();
 
         let cubes: Vec<&str> = cube_matcher.find_iter(game_split[1]).map(|m| { m.as_str() }).collect();
 
         let mut possible_game: bool = true;
 
         for cube in cubes {
-            let cube_split: Vec<&str> = cube.split(" ").collect();
+            let cube_split: Vec<&str> = cube.split(' ').collect();
             let cube_count: i32 = cube_split[0].parse::<i32>().unwrap();
             let cube_color: &str = cube_split[1];
 
@@ -49,7 +49,7 @@ pub fn part_two(input: &str) -> Option<u32> {
     let mut power: u32 = 0;
 
     for game in games {
-        let game_split: Vec<&str> = game.split(":").map(str::trim).collect();
+        let game_split: Vec<&str> = game.split(':').map(str::trim).collect();
         let cubes: Vec<&str> = cube_matcher.find_iter(game_split[1]).map(|m| { m.as_str() }).collect();
 
         let mut max_red_cubes: u32 = 0;
@@ -57,7 +57,7 @@ pub fn part_two(input: &str) -> Option<u32> {
         let mut max_blue_cubes: u32 = 0;
 
         for cube in cubes {
-            let cube_split: Vec<&str> = cube.split(" ").collect();
+            let cube_split: Vec<&str> = cube.split(' ').collect();
             let cube_count: u32 = cube_split[0].parse::<u32>().unwrap();
             let cube_color: &str = cube_split[1];
 
